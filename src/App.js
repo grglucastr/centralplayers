@@ -45,6 +45,12 @@ class App extends Component {
   handleQtyGamesPlayedChange = (event) => {
     this.setState({qtyGames: event.target.value});
   }
+
+  handelFormSubmit = (event) => {
+    event.preventDefault();
+    console.log('loggin the state here');
+    console.log(this.state);
+  }
   
 
   render() {
@@ -69,7 +75,7 @@ class App extends Component {
         <div className="centralPlayers">
           <div className="centralPlayersForm">
             <h3>Add New Player</h3>
-            <form>
+            <form onSubmit={(event) => this.handelFormSubmit(event)}>
               <input 
                 placeholder="First Name" 
                 value={firstName}
