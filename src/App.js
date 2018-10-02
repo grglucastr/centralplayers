@@ -29,9 +29,21 @@ class App extends Component {
     showQuantity: false
   }
 
-  handleTextChange = (property, value) => {
-    this.setState({property: value});
-    
+  handleFirstNameChange = (event) => {
+    this.setState({firstName: event.target.value});
+  }
+
+  handleLastNameChange = (event) => {
+    this.setState({lastName: event.target.value});
+  }
+
+  handleUserNameChange = (event) => {
+    this.setState({username: event.target.value});
+  }
+
+
+  handleQtyGamesPlayedChange = (event) => {
+    this.setState({qtyGames: event.target.value});
   }
   
 
@@ -61,16 +73,25 @@ class App extends Component {
               <input 
                 placeholder="First Name" 
                 value={firstName}
-                onChange={(event) => this.handleTextChange('firstName', event)} />
+                onChange={(event) => this.handleFirstNameChange(event)} />
 
-              <input 
+              <input  
                 placeholder="Last Name" 
                 value={lastName}
-                onChange={(event) => this.handleTextChange('lastName', event)} />
+                onChange={(event) => this.handleLastNameChange(event)} />
 
-              <input placeholder="Unique @username" value={username} />
-              <input type="number" placeholder="Quantity games played" value={qtyGames} />
-              <button type="submit">Add</button>
+              <input
+                placeholder="Unique @username"
+                value={username}
+                onChange={(event) => this.handleUserNameChange(event)} />
+
+              <input 
+                type="number" 
+                placeholder="Quantity games played" 
+                value={qtyGames}
+                onChange={(event) => this.handleQtyGamesPlayedChange(event)} />
+
+              <button type="submit" disabled={username.length === 0}>Add</button>
             </form>
           </div>
 
