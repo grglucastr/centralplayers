@@ -2,31 +2,29 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-const users = [
-  {
-    firstName: 'George',
-    lastName: 'Bentes',
-    username: '@grglucastr',
-    qtyGames: 8,
-    showQuantity: false
-  },
-  {
-    firstName: 'Anthony',
-    lastName: 'Gabriel',
-    username: '@zAnthony~',
-    qtyGames: 12,
-    showQuantity: false
-  },
-]
-
-
 class App extends Component {
   state = {
     firstName: '',
     lastName: '',
     username: '',
     qtyGames: 0,
-    showQuantity: false
+    showQuantity: false,
+    users: [
+      {
+        firstName: 'George',
+        lastName: 'Bentes',
+        username: '@grglucastr',
+        qtyGames: 8,
+        showQuantity: false
+      },
+      {
+        firstName: 'Anthony',
+        lastName: 'Gabriel',
+        username: '@zAnthony~',
+        qtyGames: 12,
+        showQuantity: false
+      },
+    ]
   }
 
   handleFirstNameChange = (event) => {
@@ -48,14 +46,57 @@ class App extends Component {
 
   handelFormSubmit = (event) => {
     event.preventDefault();
-    console.log('loggin the state here');
-    console.log(this.state);
+
+    const {username} = this.state;
+    
+    if(this.isUsernameAvailable(username)){
+      this.addNewUser();
+    }else{
+      //Show unavailable message here.
+    }
+    
+
+  }
+
+  isUsernameAvailable = (username) => {
+    const {users} = this.state;
+    for(let user of users){
+      if(user.username === username){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  addNewUser = () => {
+    const user = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      username: this.state.username,
+      qtyGames: this.state.qtyGames,
+      showQuantity: this.state.qtyGames
+    }
+
+    const users = this.state.users;
+    users.push(user);
+    this.setState({users});
+    this.clearFields();
+  }
+
+  clearFields = () => {
+    this.setState({
+      firstName: '',
+      lastName: '',
+      username: '',
+      qtyGames: '',
+      showQuantity: false
+    });
   }
   
 
   render() {
 
-    let {firstName, lastName, username, qtyGames} = this.state;
+    let {firstName, lastName, username, qtyGames, users} = this.state;
 
     const rows = users.map((user) => (
       <tr key={user.username}>
