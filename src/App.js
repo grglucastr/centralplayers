@@ -51,11 +51,7 @@ class App extends Component {
     
     if(this.isUsernameAvailable(username)){
       this.addNewUser();
-    }else{
-      //Show unavailable message here.
     }
-    
-
   }
 
   isUsernameAvailable = (username) => {
@@ -93,6 +89,18 @@ class App extends Component {
     });
   }
   
+  handleShowQty = (event, pUser) => {
+    const {users} = this.state;
+
+    for(let user of users){
+      if(user.username === pUser.username){
+        user.showQuantity = event.target.checked;
+      }
+    }
+    
+    this.setState({users});
+        
+  }
 
   render() {
 
@@ -101,8 +109,13 @@ class App extends Component {
     const rows = users.map((user) => (
       <tr key={user.username}>
         <td>{user.username}</td>
-        <td>{user.qtyGames}</td>
-        <td><input type="checkbox" /></td>
+        <td>
+          {
+            user.showQuantity ? `${user.username} has played ${user.qtyGames}` : 
+            `${user.username} has played * games` 
+          }
+        </td>
+        <td><input type="checkbox" onChange={(event) => this.handleShowQty(event, user)} /></td>
       </tr>
     ));
 
@@ -138,8 +151,14 @@ class App extends Component {
                 value={qtyGames}
                 onChange={(event) => this.handleQtyGamesPlayedChange(event)} />
 
-              <button type="submit" disabled={username.length === 0}>Add</button>
+              <button type="submit" disabled={username.length === 0 || !this.isUsernameAvailable(this.state.username) }>
+                Add
+              </button>
             </form>
+            
+            {this.isUsernameAvailable(this.state.username) ? '' :
+            <p style={{color:'red'}}>Username not available.</p>
+            }
           </div>
 
           <hr/>
