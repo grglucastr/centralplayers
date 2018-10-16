@@ -107,7 +107,7 @@ class AddUser extends Component{
 
 					{
 						(this.state.usernameAvailable) ? '' :
-						(<p className='error'>This username is not available</p>)
+						(<p className='text-danger'>This username is not available</p>)
 					}
 				</form>
 			</div>

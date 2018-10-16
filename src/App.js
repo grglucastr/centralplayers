@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import AddUser from './AddUser';
+import UserList from './UserList';
 
 
 class App extends Component {
@@ -26,12 +27,29 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
 
-        {
-          JSON.stringify(this.state.users)
-        }
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-12">
+              <AddUser users={this.state.users} OnAddUser={this.handleAddUser}/>
+            </div>
+          </div>
 
-        <AddUser users={this.state.users} OnAddUser={this.handleAddUser}/>
+          <div className="row">
+            <div className="col-sm-12">
+              {
+                (this.state.users.length > 0) ?
+                (<UserList users={this.state.users} />) :
+                ('')
+              }
+            </div>
+          </div>
+
+        </div>
+
         
+
+        
+                
       </div>
     );
   }
